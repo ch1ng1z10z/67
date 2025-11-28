@@ -1,0 +1,56 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.swp
+*.bak
+*.tmp
+
+# ---- Virtual environment ----
+venv/
+env/
+
+# ---- Django ----
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+static/
+
+# Django migrations
+**/migrations/**.py
+!**/migrations/__init__.py
+
+# ---- IDE stuff ----
+.vscode/
+.idea/
+*.code-workspace
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+
+# ---- pytest / coverage ----
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+
+# ---- env files ----
+.env
+.env.*
+*.env
+
+# ---- Swagger generated files ----
+*.yaml
+*.yml
+
+# ---- Backup files ----
+*.bak
+*.old
+*.orig
