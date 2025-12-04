@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import User
+from rest_framework.viewsets import ModelViewSet
+from .permissions import IsModerator
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -23,3 +25,7 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid credentials")
         attrs['user'] = user
         return attrs
+    
+
+    
+
