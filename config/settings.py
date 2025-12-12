@@ -43,7 +43,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 
 TEMPLATES = [
@@ -115,3 +115,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GOOGLE_CLIENT_ID = "77203428114-u6rb1lne0ffbijc9qd6a18je6okkqj4e.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_REDIRECT_URI = "http://localhost:8000/oauth/google/callback/"
