@@ -1,23 +1,20 @@
-
+from datetime import timedelta
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p_au-nzr79_i6cdj$-*00pr%%_za=u0$2@%(o^+^do^r+ekvru'
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "django-insecure-p_au-nzr79_i6cdj$-*00pr%%_za=u0$2@%(o^+^do^r+ekvru"
+)
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,9 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
+    'rest_framework_simplejwt',
     'drf_yasg',
     'account',
+    'common',
 ]
 
 MIDDLEWARE = [
@@ -44,6 +44,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'config.urls'
 
 AUTH_USER_MODEL = 'account.CustomUser'
+
 
 
 TEMPLATES = [
@@ -62,10 +63,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -75,8 +75,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -94,28 +92,46 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GOOGLE_CLIENT_ID = "77203428114-u6rb1lne0ffbijc9qd6a18je6okkqj4e.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "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"
-GOOGLE_REDIRECT_URI = "http://localhost:8000/oauth/google/callback/"
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+
+GOOGLE_CLIENT_ID = os.getenv(
+    "GOOGLE_CLIENT_ID",
+    "77203428114-u6rb1lne0ffbijc9qd6a18je6okkqj4e.apps.googleusercontent.com"
+)
+
+GOOGLE_CLIENT_SECRET = os.getenv(
+    "GOOGLE_CLIENT_SECRET",
+    "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"
+)
+
+GOOGLE_REDIRECT_URI = "http://localhost:8000/api/accounts/oauth/google/callback/"
+
+
+
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
